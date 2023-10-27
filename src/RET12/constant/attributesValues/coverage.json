@@ -1,0 +1,10 @@
+{
+    "coverage": [
+        "alpha",
+        "full",
+        "half",
+        "medium",
+        "low",
+        "sheer"
+    ]
+}

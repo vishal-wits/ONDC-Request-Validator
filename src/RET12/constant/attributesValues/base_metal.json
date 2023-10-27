@@ -1,0 +1,16 @@
+{
+    "base_metal": [
+        "alpha",
+        "gold",
+        "silver",
+        "brass",
+        "alloy",
+        "ceramic",
+        "wood",
+        "metal",
+        "german silver",
+        "leather",
+        "plastic",
+        "PU"
+    ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ondc-request-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm run build",
+    "postbuild": "cp -r src/RET12ValidatorInput dist/ && cp -r src/RET12/constant/attributesValues dist/RET12/",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "ts-node src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.7",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "tslib": "^2.6.2"
+  }
+}

@@ -1,0 +1,10 @@
+{
+    "sleeve_length": [
+        "full",
+        "half",
+        "long",
+        "short",
+        "sleeveless",
+        "three-quarter"
+    ]
+}

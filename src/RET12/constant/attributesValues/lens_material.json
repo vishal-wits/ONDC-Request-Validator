@@ -1,0 +1,11 @@
+{
+    "lens_material": [
+        "alpha",
+        "composite",
+        "glass",
+        "plastic",
+        "polycarbonate",
+        "trivex",
+        "high index"
+    ]
+}

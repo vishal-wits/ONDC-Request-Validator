@@ -1,0 +1,9 @@
+{
+    "connectivity": [
+        "bluetooth",
+        "LTE",
+        "wi-fi",
+        "wireless",
+        "USB"
+    ]
+}

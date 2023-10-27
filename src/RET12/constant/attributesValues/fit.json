@@ -1,0 +1,12 @@
+{
+    "fit": [
+        "alphanumeric",
+        "loose",
+        "regular",
+        "relax",
+        "skinny",
+        "slim",
+        "smart",
+        "ultra slim"
+    ]
+}

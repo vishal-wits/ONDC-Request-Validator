@@ -1,0 +1,13 @@
+{
+    "dial_shape": [
+        "alpha",
+        "asymmetric",
+        "diamond",
+        "oval",
+        "rectangle",
+        "round",
+        "square",
+        "triangle",
+        "thread"
+    ]
+}

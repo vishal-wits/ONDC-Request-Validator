@@ -1,0 +1,9 @@
+{
+    "padding": [
+        "alpha",
+        "lightly padded",
+        "heavily padded",
+        "non padded",
+        "removable padding"
+    ]
+}

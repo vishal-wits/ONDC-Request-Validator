@@ -1,0 +1,7 @@
+{
+    "compatible_devices": [
+        "laptop",
+        "desktop",
+        "tablet"
+    ]
+}

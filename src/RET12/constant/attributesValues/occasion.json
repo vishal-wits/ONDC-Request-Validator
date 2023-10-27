@@ -1,0 +1,16 @@
+{
+    "occasion": [
+        "alpha",
+        "casual",
+        "ethnic casual",
+        "ethnic party",
+        "festive",
+        "formal",
+        "others",
+        "party",
+        "semiformal",
+        "semicasual",
+        "sports",
+        "wedding"
+    ]
+}
