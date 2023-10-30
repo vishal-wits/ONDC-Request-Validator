@@ -67,12 +67,15 @@ const validateDescriptor = (errors: any[], payload: any, path: string, isItemDes
             if (key === 'images' && !Array.isArray(value)) {
                 errors.push({ message: `➡️♠️ Missing required field in ${path} - ${key}`, key: `${path.replace(/ > /g, '_')}_${key}` });
             }
+            if (key === 'tags' && !Array.isArray(value)) {
+                errors.push({ message: `➡️♠️ Missing required field in ${path} - ${key}`, key: `${path.replace(/ > /g, '_')}_${key}` });
+            }
 
             if (isItemDescriptor && key === 'code') {
                 if (!isValidDescriptorCode(value)) {
                     errors.push({ message: `➡️♠️ The ${key} should be valid in ${path} - ${key}`, key: `${path.replace(/ > /g, '_')}_${key}` });
                 }
-            } else if (key !== 'images' && (typeof value !== 'string' || !value)) {
+            } else if (key !== 'images' && key !== 'tags' && (typeof value !== 'string' || !value)) {
                 errors.push({ message: `➡️♠️ Missing required field in ${path} - ${key}`, key: `${path.replace(/ > /g, '_')}_${key}` });
             }
         }
@@ -183,7 +186,7 @@ const validateItems = async (errors: any[], payload: any, categories: any, conte
         if (!quantity || typeof quantity != 'object') {
             errors.push({ message: `➡️♠️ Missing required field - quantity at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_quantity` });
         } else {
-            validateItemsQuantity(errors, descriptor, providerIndex, index);
+            validateItemsQuantity(errors, quantity, providerIndex, index);
         }
         // price
         if (!price || typeof price != 'object') {
@@ -209,11 +212,11 @@ const validateItems = async (errors: any[], payload: any, categories: any, conte
         }
 
         // @ondc/org/returnable
-        if (el && (el['@ondc/org/returnable'] !== undefined || typeof el['@ondc/org/returnable'] != 'boolean')) {
+        if (el && (!el.hasOwnProperty('@ondc/org/returnable') || typeof el['@ondc/org/returnable'] != 'boolean')) {
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/returnable at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/returnable` });
         }
         // @ondc/org/cancellable
-        if (el && (el['@ondc/org/cancellable'] !== undefined || typeof el['@ondc/org/cancellable'] != 'boolean')) {
+        if (el && (!el.hasOwnProperty('@ondc/org/cancellable') || typeof el['@ondc/org/cancellable'] != 'boolean')) {
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/cancellable at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/cancellable` });
         }
         // @ondc/org/return_window
@@ -221,7 +224,7 @@ const validateItems = async (errors: any[], payload: any, categories: any, conte
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/return_window at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/return_window` });
         }
         // @ondc/org/seller_pickup_return
-        if (el && (el['@ondc/org/seller_pickup_return'] !== undefined || typeof el['@ondc/org/seller_pickup_return'] != 'boolean')) {
+        if (el && (!el.hasOwnProperty('@ondc/org/seller_pickup_return') || typeof el['@ondc/org/seller_pickup_return'] != 'boolean')) {
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/seller_pickup_return at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/seller_pickup_return` });
         }
         // @ondc/org/time_to_ship
@@ -229,7 +232,7 @@ const validateItems = async (errors: any[], payload: any, categories: any, conte
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/time_to_ship at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/time_to_ship` });
         }
         // @ondc/org/available_on_cod
-        if (el && (el['@ondc/org/available_on_cod'] !== undefined || typeof el['@ondc/org/available_on_cod'] != 'boolean')) {
+        if (el && (!el.hasOwnProperty('@ondc/org/available_on_cod') || typeof el['@ondc/org/available_on_cod'] != 'boolean')) {
             errors.push({ message: `➡️♠️ Missing/Invalid required field - @ondc/org/available_on_cod at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/available_on_cod` });
         }
         // @ondc/org/contact_details_consumer_care
@@ -240,10 +243,10 @@ const validateItems = async (errors: any[], payload: any, categories: any, conte
             if (contact_details_consumer_care.length != 3) {
                 errors.push({ message: `➡️♠️ Invalid @ondc/org/contact_details_consumer_care which should have name,email,mobile at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/contact_details_consumer_care` });
             } else {
-                if (!contact_details_consumer_care[1] || !isEmailValid(contact_details_consumer_care[1])) {
+                if (!contact_details_consumer_care[1] || !isEmailValid(contact_details_consumer_care[1].trim())) {
                     errors.push({ message: `➡️♠️ Invalid email of @ondc/org/contact_details_consumer_care at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/contact_details_consumer_care` });
                 }
-                if (!contact_details_consumer_care[2] || !isPhoneNumberValid(contact_details_consumer_care[2])) {
+                if (!contact_details_consumer_care[2] || !isPhoneNumberValid(contact_details_consumer_care[2].trim())) {
                     errors.push({ message: `➡️♠️ Invalid mobile of @ondc/org/contact_details_consumer_care at items index ${index} in message > catalog > bpp/providers${providerIndex} > items`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_@ondc/org/contact_details_consumer_care` });
                 }
             }
@@ -400,8 +403,8 @@ const validateItemsPrice = (errors: any[], payload: any, providerIndex: number, 
     const { currency, value, maximum_value } = payload;
     if (!currency || typeof currency != 'string') {
         errors.push({ message: `➡️♠️ Missing required field - currency at items index ${index} in message > catalog > bpp/providers${providerIndex} > items > price`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_price_currency` });
-    } else if (!counrtyCode.includes(currency)) {
-        errors.push({ message: `➡️♠️ Currency should be ${counrtyCode.join(', ')} at items index ${index} in message > catalog > bpp/providers${providerIndex} > items > price`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_price_currency` });
+    } else if (currency !== 'INR') {
+        errors.push({ message: `➡️♠️ Currency should be INR at items index ${index} in message > catalog > bpp/providers${providerIndex} > items > price`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_price_currency` });
     }
     if (!value || typeof value != 'string' || isNaN(Number(value))) {
         errors.push({ message: `➡️♠️ Missing required field - value at items index ${index} in message > catalog > bpp/providers${providerIndex} > items > price`, key: `message_catalog_bpp/providers${providerIndex}_items${index}_price_value` });
@@ -702,13 +705,12 @@ const validateTags = async (errors: any[], payload: any, providerIndex: number, 
                             break;
                         case 'name':
                             const parts = listItem.value.split(".");
-                            if (!(
+                            if (listItem.value.includes('item.tags') && !(
                                 parts.length === 4 &&
                                 parts[0] === "item" &&
                                 parts[1] === "tags" &&
                                 parts[2] === "attribute" &&
-                                !parts[3].includes(' ') &&
-                                attributes.every(attr => attr.toLowerCase().replace(/ /g, '_') === parts[3]))) {
+                                attributes.some(attr => attr.toLowerCase().replace(/ /g, '_') === parts[3]))) { // attr.toLowerCase().replace(/ /g, '_')
                                 errors.push({ message: `➡️♠️ Categories list value should be valid if code is name category index ${categoryIndex}, tag index ${index} and list index ${listIndex} in message > catalog > bpp/providers${providerIndex} > categories > tags > list`, key: `message_catalog_bpp/providers${providerIndex}_categories${categoryIndex}_tags${index}_list${listIndex}_value` });
                             }
                             break;
