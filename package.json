@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prestart": "npm run build",
-    "postbuild": "cp -r src/RET12ValidatorInput dist/ && cp -r src/RET12/constant/attributesValues dist/RET12/",
+    "postbuild": "cp -r src/RET12ValidatorInput dist/ && cp -r src/RET12/constant/attributesValues dist/RET12/ && cp -r src/Retails/validatorInput dist/Retails && cp -r src/Retails/temporaryFiles dist/Retails",
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "ts-node src/index.ts"

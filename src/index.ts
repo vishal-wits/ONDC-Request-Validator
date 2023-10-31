@@ -1,2 +1,8 @@
 import { validateRET12 } from "./RET12/validator";
-validateRET12('onSearch_fashion_sample_data_valid');
+import { validateRetailOnStatus } from "./Retails/validator";
+
+(async () => {
+    // await validateRET12('onSearch_fashion_sample_data_valid');
+    await validateRetailOnStatus();
+})();
+
